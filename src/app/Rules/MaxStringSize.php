@@ -7,7 +7,7 @@ use Illuminate\Contracts\Validation\ValidationRule;
 
 class MaxStringSize implements ValidationRule
 {
-    public function __construct(protected int $var) {
+    public function __construct(protected int $size) {
     }
 
     /**
@@ -17,8 +17,8 @@ class MaxStringSize implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (strlen($value) > $this->var) {
-            $fail('The :attribute must be less than ' . $this->var . ' byte.');
+        if (strlen($value) > $this->size) {
+            $fail('The :attribute must be less than ' . $this->size . ' byte.');
         }
     }
 }
