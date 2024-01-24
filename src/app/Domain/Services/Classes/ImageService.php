@@ -9,6 +9,7 @@ use App\Domain\Repositories\Interfaces\IImageRepository;
 use App\Domain\Services\Interfaces\IImageService;
 use App\Jobs\ProcessImage;
 use App\Models\Image;
+use Illuminate\Http\UploadedFile;
 use Intervention\Image\Encoders\PngEncoder;
 use Intervention\Image\Laravel\Facades\Image as ImageManager;
 
@@ -21,24 +22,19 @@ class ImageService implements IImageService
     {
     }
 
-    public function create(array $data)
+    public function storeOnDisk(UploadedFile $image, string $folder,string $name)
     {
-        $name = "ad_" . uniqid() . '.' . $data['image']->extension();
-        $path = $data['image']->storeAs('images', $name);
-        $image = $this->adRepository->findById((int)$data['ad_id'])->image()->create([
-            'path' => $path,
-            'name' => $name
-        ]);
+        $path = $image->storeAs($folder, $name);
 
-        ProcessImage::dispatch($image);
-        return $image;
+        ProcessImage::dispatch($path);
+        return $path;
     }
 
-    public function compress(Image $image)
+    public function compress(string $path)
     {
-        ImageManager::read("storage/app/$image->path")
+        ImageManager::read("storage/app/$path")
         ->resize(600, 600)
         ->encode(new PngEncoder(quality: 70))
-        ->save("storage/app/$image->path");
+        ->save("storage/app/$path");
     }
 }

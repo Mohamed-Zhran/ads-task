@@ -193,13 +193,15 @@
 							]
 						},
 						"url": {
-							"raw": "localhost/api/image",
+							"raw": "localhost/api/ads/image/upload",
 							"host": [
 								"localhost"
 							],
 							"path": [
 								"api",
-								"image"
+								"ads",
+								"image",
+								"upload"
 							]
 						}
 					},

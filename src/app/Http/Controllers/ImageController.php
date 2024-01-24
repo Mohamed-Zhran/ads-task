@@ -11,14 +11,4 @@ class ImageController extends Controller
     public function __construct(protected IImageService $imageService, protected IApiHttpResponder $apiHttpResponder)
     {
     }
-
-    public function store(StoreImageRequest $request)
-    {
-        try {
-            $image=$this->imageService->create($request->validated());
-            return $this->apiHttpResponder->response(data: $image->path, message: 'Image is created successfully');
-        } catch (\Exception $e) {
-            return $this->apiHttpResponder->responseError(message: $e->getMessage(), status: 500);
-        }
-    }
 }

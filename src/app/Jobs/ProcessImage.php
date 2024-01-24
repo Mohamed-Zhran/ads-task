@@ -19,7 +19,7 @@ class ProcessImage implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(public Image $image)
+    public function __construct(public string $path)
     {
         //
     }
@@ -29,6 +29,6 @@ class ProcessImage implements ShouldQueue
      */
     public function handle(IImageService $imageService): void
     {
-        $imageService->compress($this->image);
+        $imageService->compress($this->path);
     }
 }

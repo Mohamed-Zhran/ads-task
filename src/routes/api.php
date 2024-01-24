@@ -26,5 +26,5 @@ Route::post('/register', [AuthController::class, 'register']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/ads', [AdController::class, 'store']);
-    Route::post('/image', [ImageController::class, 'store']);
+    Route::post('ads/image/upload', [AdController::class, 'attachImage']);
 });
